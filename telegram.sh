@@ -42,9 +42,24 @@ TIMESTAMP=$(date --utc +%FT%TZ)
 CREDITS="$CI_COMMIT_AUTHOR"
 
 if [-z $LINK_ARTIFACT] || [$LINK_ARTIFACT == false]; then
-    BODY='['"$CI_PROJECT_TITLE"']('"$CI_PROJECT_URL"') '"\\n"' Pipeline ['"$CI_PIPELINE_IID"' '"$STATUS_MESSAGE"' - '"$CI_PROJECT_PATH_SLUG"']('"$CI_PIPELINE_URL"') '"\\n"' '\'"${COMMIT_MESSAGE}"\'' '"\\n"' _'"$CREDITS"'_ '"\\n"' *Commit* ['"$CI_COMMIT_SHORT_SHA"']('"$CI_PROJECT_URL"'/commit/'"$CI_COMMIT_SHA"') '"\\n"' *Branch* ['"$CI_COMMIT_REF_NAME"']('"$CI_PROJECT_URL"'/tree/'"$CI_COMMIT_REF_NAME"') '"\\n"' '
+    BODY='
+['$CI_PROJECT_TITLE']('$CI_PROJECT_URL')
+Pipeline ['$CI_PIPELINE_IID' '$STATUS_MESSAGE' - '$CI_PROJECT_PATH_SLUG']('$CI_PIPELINE_URL') 
+'$COMMIT_MESSAGE'
+_'$CREDITS'_
+*Commit* ['$CI_COMMIT_SHORT_SHA']('$CI_PROJECT_URL'/commit/'$CI_COMMIT_SHA')
+*Branch* ['$CI_COMMIT_REF_NAME']('$CI_PROJECT_URL'/tree/'$CI_COMMIT_REF_NAME')
+    '
 else
-    BODY='['"$CI_PROJECT_TITLE"']('"$CI_PROJECT_URL"')'"\\n"' Pipeline ['"$CI_PIPELINE_IID"' '"$STATUS_MESSAGE"' - '"$CI_PROJECT_PATH_SLUG"']('"$CI_PIPELINE_URL"')'"\\n"' '\'"${COMMIT_MESSAGE}"\'' '"\\n"' _'"$CREDITS"'_ '"\\n"' *Commit* ['"$CI_COMMIT_SHORT_SHA"']('"$CI_PROJECT_URL"'/commit/'"$CI_COMMIT_SHA"') '"\\n"' *Branch* ['"$CI_COMMIT_REF_NAME"']('"$CI_PROJECT_URL"'/tree/'"$CI_COMMIT_REF_NAME"') '"\\n"' *Artifacts* ['$CI_JOB_ID']('"$ARTIFACT_URL"') '"\\n"' '
+    BODY='
+['$CI_PROJECT_TITLE']('$CI_PROJECT_URL')
+Pipeline ['$CI_PIPELINE_IID' '$STATUS_MESSAGE' - '$CI_PROJECT_PATH_SLUG']('$CI_PIPELINE_URL') 
+'$COMMIT_MESSAGE'
+_'$CREDITS'_
+*Commit* ['$CI_COMMIT_SHORT_SHA']('$CI_PROJECT_URL'/commit/'$CI_COMMIT_SHA')
+*Branch* ['$CI_COMMIT_REF_NAME']('$CI_PROJECT_URL'/tree/'$CI_COMMIT_REF_NAME')
+*Artifacts* ['$CI_JOB_ID']('$ARTIFACT_URL')
+    '
 fi
 
 DATA="{\"chat_id\": \"$2\", \"text\": \"$BODY\" \"parse_mode\": \"Markdown\", \"disable_web_page_preview\": \"true\"}"
@@ -52,6 +67,6 @@ DATA="{\"chat_id\": \"$2\", \"text\": \"$BODY\" \"parse_mode\": \"Markdown\", \"
 echo -e "$DATA"
 echo -e "https://api.telegram.org/bot$1/sendMessage"
 
-echo -e "[Webhook]: Sending webhook to Telegram";
-(curl --fail --progress-bar -A "GitLabCi-Webhook" -H Content-Type:application/json -H X-Author:k3rn31p4nic#8383 -d "$DATA" "https://api.telegram.org/bot$1/sendMessage" \
-&& echo -e "\\n[Webhook]: Successfully sent the webhook.") || echo -e "\\n[Webhook]: Unable to send webhook."
+# echo -e "[Webhook]: Sending webhook to Telegram";
+# (curl --fail --progress-bar -A "GitLabCi-Webhook" -H Content-Type:application/json -H X-Author:k3rn31p4nic#8383 -d "$DATA" "https://api.telegram.org/bot$1/sendMessage" \
+# && echo -e "\\n[Webhook]: Successfully sent the webhook.") || echo -e "\\n[Webhook]: Unable to send webhook."
