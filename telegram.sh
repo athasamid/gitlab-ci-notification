@@ -64,8 +64,8 @@ fi
 
 DATA="{\"chat_id\": \"$2\", \"parse_mode\": \"$DATA\"}"
 
-echo "$DATA"
-echo "https://api.telegram.org/bot$1/sendMessage"
+echo -e "$DATA"
+echo -e "https://api.telegram.org/bot$1/sendMessage"
 
 echo -e "[Webhook]: Sending webhook to Telegram";
 (curl --fail --progress-bar -A "GitLabCi-Webhook" -H Content-Type:application/json -H X-Author:k3rn31p4nic#8383 -d "$DATA" "https://api.telegram.org/bot$1/sendMessage" \
