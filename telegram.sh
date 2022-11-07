@@ -58,7 +58,7 @@ _'$CREDITS'_
 *Artifacts* ['$CI_JOB_ID']('$ARTIFACT_URL')'
 fi
 
-DATA="{\"chat_id\": \"$2\", \"text\": \"$BODY\" \"parse_mode\": \"Markdown\", \"disable_web_page_preview\": \"true\"}"
+DATA="{\"chat_id\": \"$2\", \"text\": \"$BODY\", \"parse_mode\": \"Markdown\", \"disable_web_page_preview\": \"true\"}"
 
 echo -e "$DATA"
 echo -e "https://api.telegram.org/bot$1/sendMessage"
