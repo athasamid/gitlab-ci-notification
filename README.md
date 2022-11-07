@@ -54,24 +54,28 @@ stages:
     - notification
 success_notification:
     stage: notification
+    image: alpine/curl
     script:
+        - 'apk --no-cache add wget curl'
         - wget https://raw.githubusercontent.com/athasamid/gitlab-ci-notification/master/telegram.sh
         - wget https://raw.githubusercontent.com/athasamid/gitlab-ci-notification/master/discord.sh
         - chmod +x telegram.sh
         - chmod +x discord.sh
-        - ./telegram.sh success $BOT_TOKEN $CHAT_ID
-        - ./discord.sh success $WEBHOOK_URL
+        - sh ./telegram.sh success $BOT_TOKEN $CHAT_ID
+        - sh ./discord.sh success $WEBHOOK_URL
     when: on_success
 
 failure_notification:
     stage: notification
+    image: alpine/curl
     script:
+        - 'apk --no-cache add wget curl'
         - wget https://raw.githubusercontent.com/athasamid/gitlab-ci-notification/master/telegram.sh
         - wget https://raw.githubusercontent.com/athasamid/gitlab-ci-notification/master/discord.sh
         - chmod +x telegram.sh
         - chmod +x discord.sh
-        - ./telegram.sh failure $BOT_TOKEN $CHAT_ID
-        - ./discord.sh failure $WEBHOOK_URL
+        - sh ./telegram.sh failure $BOT_TOKEN $CHAT_ID
+        - sh ./discord.sh failure $WEBHOOK_URL
     when: on_failure
 ```
 

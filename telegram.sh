@@ -64,5 +64,5 @@ fi
 
 
 echo -e "[Webhook]: Sending webhook to Telegram";
-(curl --fail --progress-bar -A "GitLabCi-Webhook" -H Content-Type:application/json -H X-Author:k3rn31p4nic#8383 -d "{\"chat_id\": \"$3\", \"parse_mode\": \"$DATA\"}" "https://api.telegram.org/bot$2/sendMessage" \
+(curl --fail --progress-bar -A "GitLabCi-Webhook" -H Content-Type:application/json -H X-Author:k3rn31p4nic#8383 -d "{\"chat_id\": \"$2\", \"parse_mode\": \"$DATA\"}" "https://api.telegram.org/bot$1/sendMessage" \
 && echo -e "\\n[Webhook]: Successfully sent the webhook.") || echo -e "\\n[Webhook]: Unable to send webhook."
