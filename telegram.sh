@@ -43,26 +43,26 @@ CREDITS="$CI_COMMIT_AUTHOR"
 
 if [-z $LINK_ARTIFACT] || [$LINK_ARTIFACT == false]; then
     BODY='
-        <b><a href="'$CI_PROJECT_URL'">'$CI_PROJECT_TITLE'</a></b> <br/>
-        Pipeline <a href="'$CI_PIPELINE_URL'">#'"$CI_PIPELINE_IID"' '"$STATUS_MESSAGE"' - '"$CI_PROJECT_PATH_SLUG"'</a><br/>
-        <i>'"${COMMIT_MESSAGE//$'\n'/}"\\n\\n"$CREDITS"'</i><br/>
-        <b>Commit</b> <a href="'$CI_PROJECT_URL'/commit/'$CI_COMMIT_SHA'">'$CI_COMMIT_SHORT_SHA'</a><br/>
-        <b>Branch</b> <a href="'$CI_PROJECT_URL'/tree/'$CI_COMMIT_REF_NAME'">'$CI_COMMIT_REF_NAME'</a>
-        '$TIMESTAMP'
+        ['"$CI_PROJECT_TITLE"']('"$CI_PROJECT_URL"')
+        Pipeline ['"$CI_PIPELINE_IID"' '"$STATUS_MESSAGE"' - '"$CI_PROJECT_PATH_SLUG"']('"$CI_PIPELINE_URL"')
+        '\'"${COMMIT_MESSAGE}"\''
+        _'"$CREDITS"'_
+        *Commit* ['"$CI_COMMIT_SHORT_SHA"']('"$_CI_PROJECT_URL"'/commit/'"$CI_COMMIT_SHA"')
+        *Branch* ['"$CI_COMMIT_REF_NAME"']('"$_CI_PROJECT_URL"'/tree/'"$CI_COMMIT_REF_NAME"')
     '
 else
     BODY='
-        <b><a href="'$CI_PROJECT_URL'">'$CI_PROJECT_TITLE'</a></b> <br/>
-        Pipeline <a href="'$CI_PIPELINE_URL'">#'"$CI_PIPELINE_IID"' '"$STATUS_MESSAGE"' - '"$CI_PROJECT_PATH_SLUG"'</a><br/>
-        <i>'"${COMMIT_MESSAGE//$'\n'/}"\\n\\n"$CREDITS"'</i><br/>
-        <b>Commit</b> <a href="'$CI_PROJECT_URL'/commit/'$CI_COMMIT_SHA'">'$CI_COMMIT_SHORT_SHA'</a><br/>
-        <b>Branch</b> <a href="'$CI_PROJECT_URL'/tree/'$CI_COMMIT_REF_NAME'">'$CI_COMMIT_REF_NAME'</a>
-        <b>Artifacts</b> <a href="'$ARTIFACT_URL'">'$CI_JOB_ID'</a>
-        '$TIMESTAMP'
+        ['"$CI_PROJECT_TITLE"']('"$CI_PROJECT_URL"')
+        Pipeline ['"$CI_PIPELINE_IID"' '"$STATUS_MESSAGE"' - '"$CI_PROJECT_PATH_SLUG"']('"$CI_PIPELINE_URL"')
+        '\'"${COMMIT_MESSAGE}"\''
+        _'"$CREDITS"'_
+        *Commit* ['"$CI_COMMIT_SHORT_SHA"']('"$_CI_PROJECT_URL"'/commit/'"$CI_COMMIT_SHA"')
+        *Branch* ['"$CI_COMMIT_REF_NAME"']('"$_CI_PROJECT_URL"'/tree/'"$CI_COMMIT_REF_NAME"')
+        *Artifacts* ['$CI_JOB_ID']('"$ARTIFACT_URL"')
     '
 fi
 
-DATA="{\"chat_id\": \"$2\", \"text\": \"$BODY\" \"parse_mode\": \"html\"}"
+DATA="{\"chat_id\": \"$2\", \"text\": \"$BODY\" \"parse_mode\": \"Markdown\"}"
 
 echo -e "$DATA"
 echo -e "https://api.telegram.org/bot$1/sendMessage"
