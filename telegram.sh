@@ -43,22 +43,22 @@ CREDITS="$CI_COMMIT_AUTHOR"
 
 if [-z $LINK_ARTIFACT] || [$LINK_ARTIFACT == false]; then
     BODY='
-        ['"$CI_PROJECT_TITLE"']('"$CI_PROJECT_URL"')
-        Pipeline ['"$CI_PIPELINE_IID"' '"$STATUS_MESSAGE"' - '"$CI_PROJECT_PATH_SLUG"']('"$CI_PIPELINE_URL"')
-        '\'"${COMMIT_MESSAGE}"\''
-        _'"$CREDITS"'_
-        *Commit* ['"$CI_COMMIT_SHORT_SHA"']('"$_CI_PROJECT_URL"'/commit/'"$CI_COMMIT_SHA"')
-        *Branch* ['"$CI_COMMIT_REF_NAME"']('"$_CI_PROJECT_URL"'/tree/'"$CI_COMMIT_REF_NAME"')
+        ['"$CI_PROJECT_TITLE"']('"$CI_PROJECT_URL"') '"\\n\\n"'
+        Pipeline ['"$CI_PIPELINE_IID"' '"$STATUS_MESSAGE"' - '"$CI_PROJECT_PATH_SLUG"']('"$CI_PIPELINE_URL"') '"\\n\\n"'
+        '\'"${COMMIT_MESSAGE}"\'' '"\\n\\n"'
+        _'"$CREDITS"'_ '"\\n\\n"'
+        *Commit* ['"$CI_COMMIT_SHORT_SHA"']('"$CI_PROJECT_URL"'/commit/'"$CI_COMMIT_SHA"') '"\\n\\n"'
+        *Branch* ['"$CI_COMMIT_REF_NAME"']('"$CI_PROJECT_URL"'/tree/'"$CI_COMMIT_REF_NAME"') '"\\n\\n"'
     '
 else
     BODY='
-        ['"$CI_PROJECT_TITLE"']('"$CI_PROJECT_URL"')
-        Pipeline ['"$CI_PIPELINE_IID"' '"$STATUS_MESSAGE"' - '"$CI_PROJECT_PATH_SLUG"']('"$CI_PIPELINE_URL"')
-        '\'"${COMMIT_MESSAGE}"\''
-        _'"$CREDITS"'_
-        *Commit* ['"$CI_COMMIT_SHORT_SHA"']('"$_CI_PROJECT_URL"'/commit/'"$CI_COMMIT_SHA"')
-        *Branch* ['"$CI_COMMIT_REF_NAME"']('"$_CI_PROJECT_URL"'/tree/'"$CI_COMMIT_REF_NAME"')
-        *Artifacts* ['$CI_JOB_ID']('"$ARTIFACT_URL"')
+        ['"$CI_PROJECT_TITLE"']('"$CI_PROJECT_URL"')'"\\n\\n"'
+        Pipeline ['"$CI_PIPELINE_IID"' '"$STATUS_MESSAGE"' - '"$CI_PROJECT_PATH_SLUG"']('"$CI_PIPELINE_URL"')'"\\n\\n"'
+        '\'"${COMMIT_MESSAGE}"\'' '"\\n\\n"'
+        _'"$CREDITS"'_ '"\\n\\n"'
+        *Commit* ['"$CI_COMMIT_SHORT_SHA"']('"$CI_PROJECT_URL"'/commit/'"$CI_COMMIT_SHA"') '"\\n\\n"'
+        *Branch* ['"$CI_COMMIT_REF_NAME"']('"$CI_PROJECT_URL"'/tree/'"$CI_COMMIT_REF_NAME"') '"\\n\\n"'
+        *Artifacts* ['$CI_JOB_ID']('"$ARTIFACT_URL"') '"\\n\\n"'
     '
 fi
 
