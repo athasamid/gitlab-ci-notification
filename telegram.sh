@@ -42,7 +42,7 @@ TIMESTAMP=$(date --utc +%FT%TZ)
 CREDITS="$CI_COMMIT_AUTHOR"
 
 if [-z $LINK_ARTIFACT] || [$LINK_ARTIFACT == false]; then
-    DATA='
+    BODY='
         <b><a href="'$CI_PROJECT_URL'">'$CI_PROJECT_TITLE'</a></b> <br/>
         Pipeline <a href="'$CI_PIPELINE_URL'">#'"$CI_PIPELINE_IID"' '"$STATUS_MESSAGE"' - '"$CI_PROJECT_PATH_SLUG"'</a><br/>
         <i>'"${COMMIT_MESSAGE//$'\n'/}"\\n\\n"$CREDITS"'</i><br/>
@@ -51,7 +51,7 @@ if [-z $LINK_ARTIFACT] || [$LINK_ARTIFACT == false]; then
         '$TIMESTAMP'
     '
 else
-    DATA='
+    BODY='
         <b><a href="'$CI_PROJECT_URL'">'$CI_PROJECT_TITLE'</a></b> <br/>
         Pipeline <a href="'$CI_PIPELINE_URL'">#'"$CI_PIPELINE_IID"' '"$STATUS_MESSAGE"' - '"$CI_PROJECT_PATH_SLUG"'</a><br/>
         <i>'"${COMMIT_MESSAGE//$'\n'/}"\\n\\n"$CREDITS"'</i><br/>
@@ -62,7 +62,11 @@ else
     '
 fi
 
+DATA="{\"chat_id\": \"$2\", \"parse_mode\": \"$DATA\"}"
+
+echo "$DATA"
+echo "https://api.telegram.org/bot$1/sendMessage"
 
 echo -e "[Webhook]: Sending webhook to Telegram";
-(curl --fail --progress-bar -A "GitLabCi-Webhook" -H Content-Type:application/json -H X-Author:k3rn31p4nic#8383 -d "{\"chat_id\": \"$2\", \"parse_mode\": \"$DATA\"}" "https://api.telegram.org/bot$1/sendMessage" \
+(curl --fail --progress-bar -A "GitLabCi-Webhook" -H Content-Type:application/json -H X-Author:k3rn31p4nic#8383 -d "$DATA" "https://api.telegram.org/bot$1/sendMessage" \
 && echo -e "\\n[Webhook]: Successfully sent the webhook.") || echo -e "\\n[Webhook]: Unable to send webhook."
