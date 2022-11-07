@@ -62,7 +62,7 @@ else
     '
 fi
 
-DATA="{\"chat_id\": \"$2\", \"parse_mode\": \"$DATA\"}"
+DATA="{\"chat_id\": \"$2\", \"text\": \"$BODY\" \"parse_mode\": \"html\"}"
 
 echo -e "$DATA"
 echo -e "https://api.telegram.org/bot$1/sendMessage"
